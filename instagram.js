@@ -80,12 +80,36 @@ const { Usuario, Post, Comentarios, sequelize, Sequelize } = require('./models')
 // });
 
 //LISTAR
-Usuario.findAll()
-.then((resultado) => {
-    console.table(resultado.map(user => user.toJSON()));
-});
+// Usuario.findAll()
+// .then((resultado) => {
+//     console.table(resultado.map(user => user.toJSON()));
+// });
 
-Post.findAll()
-.then((resultado) => {
-    console.table(resultado.map(user => user.toJSON()));
-});
+// Post.findAll()
+// .then((resultado) => {
+//     console.table(resultado.map(user => user.toJSON()));
+// });
+
+//MANEIRA 1
+// Usuario.findByPk(1, {
+//     include: [
+//         { association: 'posts' }
+//     ]
+// }).then((usuario) => {
+//     console.table(usuario.posts.map((post) => post.toJSON()));
+// });
+
+//MANEIRA 2
+// Usuario.findByPk(1, {include:['posts']}).then(
+//     usuario => {
+//         console.log(usuario.toJSON());
+//         sequelize.close();
+//     }
+// )
+
+Post.findByPk(1, {include:['comentarios']}).then(
+    post => {
+        console.log(post.toJSON());
+        sequelize.close();
+    }
+)
